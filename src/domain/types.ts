@@ -1,4 +1,20 @@
 export type EligibilityStatus = 'eligible' | 'ineligible'
+export type DemoRole = 'patient' | 'doctor'
+export type KeywordSource = 'ambient' | 'history' | 'patient' | 'doctor'
+
+export interface TranscriptEvent {
+  id: string
+  speaker: 'patient' | 'doctor'
+  speakerLabel: string
+  text: string
+  time: string
+}
+
+export interface Keyword {
+  id: string
+  label: string
+  source: KeywordSource
+}
 
 export interface EligibilityProfile {
   identityVerified: boolean

@@ -1,22 +1,44 @@
 import { createContext, useContext, useMemo, useReducer, useState, type PropsWithChildren } from 'react'
-import type { EligibilityResult } from '../domain/types'
+import { demoKeywords, demoTranscript } from '../data/demoData'
+import type { EligibilityResult, Keyword, TranscriptEvent } from '../domain/types'
 
 interface DemoEncounterState {
   eligibilityResult: EligibilityResult | null
+  appointmentTime: string | null
+  appointmentConfirmed: boolean
+  transcriptEvents: TranscriptEvent[]
+  keywords: Keyword[]
+  patientNotes: string[]
 }
 
-type DemoEncounterAction =
+export type DemoEncounterAction =
   | { type: 'set-eligibility'; result: EligibilityResult }
+  | { type: 'schedule-appointment'; time: string }
+  | { type: 'play-transcript' }
+  | { type: 'add-patient-note'; note: string }
   | { type: 'reset' }
 
 export const initialDemoEncounterState: DemoEncounterState = {
   eligibilityResult: null,
+  appointmentTime: null,
+  appointmentConfirmed: false,
+  transcriptEvents: [],
+  keywords: [],
+  patientNotes: [],
 }
 
 export function demoEncounterReducer(state: DemoEncounterState, action: DemoEncounterAction): DemoEncounterState {
   switch (action.type) {
     case 'set-eligibility':
       return { ...state, eligibilityResult: action.result }
+    case 'schedule-appointment':
+      return { ...state, appointmentTime: action.time, appointmentConfirmed: true }
+    case 'play-transcript':
+      return { ...state, transcriptEvents: demoTranscript, keywords: demoKeywords }
+    case 'add-patient-note': {
+      const note = action.note.trim()
+      return note ? { ...state, patientNotes: [...state.patientNotes, note] } : state
+    }
     case 'reset':
       return initialDemoEncounterState
   }
@@ -26,6 +48,9 @@ interface DemoEncounterContextValue {
   state: DemoEncounterState
   resetNotice: string
   setEligibility: (result: EligibilityResult) => void
+  scheduleAppointment: (time: string) => void
+  playTranscript: () => void
+  addPatientNote: (note: string) => void
   resetDemo: () => void
 }
 
@@ -39,6 +64,9 @@ export function DemoEncounterProvider({ children }: PropsWithChildren) {
       state,
       resetNotice,
       setEligibility: (result: EligibilityResult) => dispatch({ type: 'set-eligibility', result }),
+      scheduleAppointment: (time: string) => dispatch({ type: 'schedule-appointment', time }),
+      playTranscript: () => dispatch({ type: 'play-transcript' }),
+      addPatientNote: (note: string) => dispatch({ type: 'add-patient-note', note }),
       resetDemo: () => {
         dispatch({ type: 'reset' })
         setResetNotice('데모가 초기화되었습니다.')

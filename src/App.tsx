@@ -2,6 +2,9 @@ import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { DemoToolbar } from './components/DemoToolbar'
 import { PatientEligibility } from './features/patient/PatientEligibility'
 import { PatientHome } from './features/patient/PatientHome'
+import { PatientSchedule } from './features/patient/PatientSchedule'
+import { PatientVisit } from './features/patient/PatientVisit'
+import { PatientWaiting } from './features/patient/PatientWaiting'
 import { DemoEncounterProvider } from './state/DemoEncounterContext'
 
 function PlaceholderScreen({ eyebrow, title }: { eyebrow: string; title: string }) {
@@ -25,7 +28,9 @@ export function App() {
           <Routes>
             <Route path="/patient/home" element={<PatientHome />} />
             <Route path="/patient/eligibility" element={<PatientEligibility />} />
-            <Route path="/patient/schedule" element={<PlaceholderScreen eyebrow="PATIENT APP" title="예약 시간 선택" />} />
+            <Route path="/patient/schedule" element={<PatientSchedule />} />
+            <Route path="/patient/waiting" element={<PatientWaiting />} />
+            <Route path="/patient/visit" element={<PatientVisit />} />
             <Route path="/doctor/schedule" element={<PlaceholderScreen eyebrow="DOCTOR APP" title="오늘의 비대면 일정" />} />
             <Route path="*" element={<Navigate replace to="/patient/home" />} />
           </Routes>
