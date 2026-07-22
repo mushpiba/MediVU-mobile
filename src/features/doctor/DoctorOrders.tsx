@@ -15,7 +15,7 @@ const statusCopy = {
 export function DoctorOrders() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const { saveOrder } = useDemoEncounter()
+  const { state, saveOrder } = useDemoEncounter()
   const initialDiagnosis = diagnosisCandidates.find(({ id }) => id === searchParams.get('diagnosis')) ?? diagnosisCandidates[0]
   const [diagnosis, setDiagnosis] = useState<ConfirmedDiagnosis>({ id: initialDiagnosis.id, name: initialDiagnosis.name, code: initialDiagnosis.code })
   const [diagnosisQuery, setDiagnosisQuery] = useState('')
@@ -83,6 +83,7 @@ export function DoctorOrders() {
           <div className="safety-summary"><span aria-hidden="true">✓</span><p><strong>금지 약품 없음</strong><br />현재 오더의 시연용 제한 검사를 통과했습니다.</p></div>
           <p className="order-disclaimer">실제 DUR·HIRA·EMR 조회가 아닌 날짜 고정 fixture입니다. 구체적인 임상 처방을 권고하지 않습니다.</p>
           <button className="primary-button" type="button" onClick={confirmOrder}>처방·오더 확정</button>
+          {state.orderSaved && <button className="patient-result-link" type="button" onClick={() => navigate('/patient/result')}>환자 결과 화면 보기 <span aria-hidden="true">→</span></button>}
         </aside>
       </div>
     </main>

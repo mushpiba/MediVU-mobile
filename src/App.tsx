@@ -6,6 +6,9 @@ import { DoctorSchedule } from './features/doctor/DoctorSchedule'
 import { DoctorVisit } from './features/doctor/DoctorVisit'
 import { PatientEligibility } from './features/patient/PatientEligibility'
 import { PatientHome } from './features/patient/PatientHome'
+import { PatientDelivery } from './features/patient/PatientDelivery'
+import { PatientPrescription } from './features/patient/PatientPrescription'
+import { PatientResult } from './features/patient/PatientResult'
 import { PatientSchedule } from './features/patient/PatientSchedule'
 import { PatientVisit } from './features/patient/PatientVisit'
 import { PatientWaiting } from './features/patient/PatientWaiting'
@@ -35,6 +38,9 @@ export function App() {
             <Route path="/patient/schedule" element={<PatientSchedule />} />
             <Route path="/patient/waiting" element={<PatientWaiting />} />
             <Route path="/patient/visit" element={<PatientVisit />} />
+            <Route path="/patient/result" element={<PatientResult />} />
+            <Route path="/patient/prescription" element={<PatientPrescription />} />
+            <Route path="/patient/delivery" element={<PatientDelivery />} />
             <Route path="/doctor/schedule" element={<DoctorSchedule />} />
             <Route path="/doctor/patient" element={<DoctorPatient />} />
             <Route path="/doctor/visit" element={<DoctorVisit />} />

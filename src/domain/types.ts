@@ -30,6 +30,7 @@ export interface ScoredDiagnosis extends DiagnosisCandidate {
 }
 
 export type MedicationRestriction = 'allowed' | 'conditional' | 'prohibited'
+export type DeliveryStage = 'eligibility' | 'pharmacy' | 'address' | 'preparing' | 'shipping' | 'delivered'
 
 export interface MedicationDecision {
   medicationId: string

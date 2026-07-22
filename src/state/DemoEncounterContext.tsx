@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, useReducer, useState, type PropsWithChildren } from 'react'
 import { demoKeywords, demoTranscript } from '../data/demoData'
-import type { ConfirmedDiagnosis, EligibilityResult, Keyword, PrescriptionOrder, TranscriptEvent } from '../domain/types'
+import type { ConfirmedDiagnosis, DeliveryStage, EligibilityResult, Keyword, PrescriptionOrder, TranscriptEvent } from '../domain/types'
 
 interface DemoEncounterState {
   eligibilityResult: EligibilityResult | null
@@ -13,6 +13,7 @@ interface DemoEncounterState {
   confirmedDiagnosis: ConfirmedDiagnosis | null
   prescription: PrescriptionOrder | null
   orderSaved: boolean
+  deliveryStage: DeliveryStage
 }
 
 export type DemoEncounterAction =
@@ -23,6 +24,7 @@ export type DemoEncounterAction =
   | { type: 'add-doctor-note'; note: string }
   | { type: 'remove-keyword'; keywordId: string }
   | { type: 'save-order'; diagnosis: ConfirmedDiagnosis; prescription: PrescriptionOrder }
+  | { type: 'set-delivery-stage'; stage: DeliveryStage }
   | { type: 'reset' }
 
 export const initialDemoEncounterState: DemoEncounterState = {
@@ -36,6 +38,7 @@ export const initialDemoEncounterState: DemoEncounterState = {
   confirmedDiagnosis: null,
   prescription: null,
   orderSaved: false,
+  deliveryStage: 'eligibility',
 }
 
 export function demoEncounterReducer(state: DemoEncounterState, action: DemoEncounterAction): DemoEncounterState {
@@ -58,6 +61,8 @@ export function demoEncounterReducer(state: DemoEncounterState, action: DemoEnco
       return { ...state, keywords: state.keywords.filter(({ id }) => id !== action.keywordId) }
     case 'save-order':
       return { ...state, confirmedDiagnosis: action.diagnosis, prescription: action.prescription, orderSaved: true }
+    case 'set-delivery-stage':
+      return { ...state, deliveryStage: action.stage }
     case 'reset':
       return initialDemoEncounterState
   }
@@ -73,6 +78,7 @@ interface DemoEncounterContextValue {
   addDoctorNote: (note: string) => void
   removeKeyword: (keywordId: string) => void
   saveOrder: (diagnosis: ConfirmedDiagnosis, prescription: PrescriptionOrder) => void
+  setDeliveryStage: (stage: DeliveryStage) => void
   resetDemo: () => void
 }
 
@@ -95,6 +101,7 @@ export function DemoEncounterProvider({ children }: PropsWithChildren) {
         dispatch({ type: 'save-order', diagnosis, prescription })
         setStatusNotice('처방과 오더를 저장했습니다.')
       },
+      setDeliveryStage: (stage: DeliveryStage) => dispatch({ type: 'set-delivery-stage', stage }),
       resetDemo: () => {
         dispatch({ type: 'reset' })
         setStatusNotice('데모가 초기화되었습니다.')
