@@ -1,4 +1,4 @@
-import type { DemoClinic, DemoPatient, EligibilityProfile, EligibilityRuleSet, Keyword, TranscriptEvent } from '../domain/types'
+import type { DemoClinic, DemoPatient, DiagnosisCandidate, EligibilityProfile, EligibilityRuleSet, Keyword, TranscriptEvent } from '../domain/types'
 
 export const demoPatient: DemoPatient = {
   id: 'P-042',
@@ -43,4 +43,18 @@ export const demoKeywords: Keyword[] = [
   { id: 'k3', label: '코막힘', source: 'ambient' },
   { id: 'k4', label: '발열 없음', source: 'ambient' },
   { id: 'k5', label: '알레르기 비염 재진', source: 'history' },
+]
+
+export const diagnosisCandidates: DiagnosisCandidate[] = [
+  { id: 'allergic-rhinitis', name: '알레르기 비염, 상세불명', code: 'J30.4', baseScore: 42, keywordWeights: { 재채기: 18, '맑은 콧물': 20, 코막힘: 12, '눈 가려움': 7, '알레르기 비염 재진': 14 } },
+  { id: 'vasomotor-rhinitis', name: '혈관운동성 비염', code: 'J30.0', baseScore: 29, keywordWeights: { '맑은 콧물': 16, 코막힘: 10 } },
+  { id: 'common-cold', name: '급성 비인두염', code: 'J00', baseScore: 26, keywordWeights: { 코막힘: 10, 재채기: 7 } },
+  { id: 'sinusitis', name: '급성 부비동염, 상세불명', code: 'J01.9', baseScore: 18, keywordWeights: { 코막힘: 12 } },
+  { id: 'influenza', name: '인플루엔자', code: 'J11.1', baseScore: 9, keywordWeights: { 발열: 50 } },
+  { id: 'asthma', name: '천식 악화', code: 'J45.901', baseScore: 4, keywordWeights: { 호흡곤란: 60 } },
+]
+
+export const pastVisits = [
+  { date: '2026-04-18', type: '대면 진료', diagnosis: '알레르기 비염 · J30.4', note: '계절성 재채기, 맑은 콧물. 발열 없음.' },
+  { date: '2025-10-03', type: '대면 진료', diagnosis: '계절성 알레르기 비염 · J30.2', note: '환절기 증상 악화. 항히스타민제 복용력.' },
 ]

@@ -66,6 +66,7 @@ export function PatientVisit() {
             <label htmlFor="patient-note" className="visually-hidden">환자 메모 입력</label>
             <div className="note-composer"><textarea id="patient-note" aria-label="환자 메모 입력" value={note} onChange={(event) => setNote(event.target.value)} placeholder="예: 밤에 코막힘이 더 심해요" /><button type="button" onClick={submitNote}>의사에게 전달</button></div>
             <div className="patient-note-list">{state.patientNotes.map((item, index) => <span key={`${item}-${index}`}><i aria-hidden="true">P</i>환자 전달 · {item}</span>)}</div>
+            <div className="patient-note-list doctor-message-list">{state.doctorNotes.map((item, index) => <span key={`${item}-${index}`}><i aria-hidden="true">D</i>의사 전달 · {item}</span>)}</div>
           </section>
         </div>
       </section>

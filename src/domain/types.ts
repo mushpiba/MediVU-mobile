@@ -16,6 +16,19 @@ export interface Keyword {
   source: KeywordSource
 }
 
+export interface DiagnosisCandidate {
+  id: string
+  name: string
+  code: string
+  baseScore: number
+  keywordWeights: Record<string, number>
+}
+
+export interface ScoredDiagnosis extends DiagnosisCandidate {
+  score: number
+  matchedKeywords: string[]
+}
+
 export interface EligibilityProfile {
   identityVerified: boolean
   hasVerifiedRevisit: boolean
