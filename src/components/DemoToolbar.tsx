@@ -3,7 +3,7 @@ import { useDemoEncounter } from '../state/DemoEncounterContext'
 
 export function DemoToolbar() {
   const navigate = useNavigate()
-  const { resetNotice, resetDemo } = useDemoEncounter()
+  const { statusNotice, resetDemo } = useDemoEncounter()
 
   const reset = () => {
     resetDemo()
@@ -21,8 +21,7 @@ export function DemoToolbar() {
         <button type="button" onClick={() => navigate('/doctor/schedule')}>의사 보기</button>
         <button type="button" className="reset-button" onClick={reset}>전체 초기화</button>
       </nav>
-      <span className="visually-hidden" role="status">{resetNotice}</span>
+      <span className="visually-hidden" role="status">{statusNotice}</span>
     </header>
   )
 }
-

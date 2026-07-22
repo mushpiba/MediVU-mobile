@@ -29,6 +29,38 @@ export interface ScoredDiagnosis extends DiagnosisCandidate {
   matchedKeywords: string[]
 }
 
+export type MedicationRestriction = 'allowed' | 'conditional' | 'prohibited'
+
+export interface MedicationDecision {
+  medicationId: string
+  name: string
+  status: MedicationRestriction
+  reason: string
+  source: string
+  asOf: string
+  evidenceUrl: string
+}
+
+export interface MedicationRuleSet {
+  source: string
+  asOf: string
+  evidenceUrl: string
+  medications: Record<string, Omit<MedicationDecision, 'source' | 'asOf' | 'evidenceUrl'>>
+}
+
+export interface ConfirmedDiagnosis {
+  id: string
+  name: string
+  code: string
+}
+
+export interface PrescriptionOrder {
+  medicationId: string
+  name: string
+  strength: string
+  instructions: string
+}
+
 export interface EligibilityProfile {
   identityVerified: boolean
   hasVerifiedRevisit: boolean

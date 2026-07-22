@@ -1,6 +1,7 @@
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { DemoToolbar } from './components/DemoToolbar'
 import { DoctorPatient } from './features/doctor/DoctorPatient'
+import { DoctorOrders } from './features/doctor/DoctorOrders'
 import { DoctorSchedule } from './features/doctor/DoctorSchedule'
 import { DoctorVisit } from './features/doctor/DoctorVisit'
 import { PatientEligibility } from './features/patient/PatientEligibility'
@@ -37,7 +38,7 @@ export function App() {
             <Route path="/doctor/schedule" element={<DoctorSchedule />} />
             <Route path="/doctor/patient" element={<DoctorPatient />} />
             <Route path="/doctor/visit" element={<DoctorVisit />} />
-            <Route path="/doctor/orders" element={<PlaceholderScreen eyebrow="DOCTOR APP" title="처방·오더" />} />
+            <Route path="/doctor/orders" element={<DoctorOrders />} />
             <Route path="*" element={<Navigate replace to="/patient/home" />} />
           </Routes>
         </div>

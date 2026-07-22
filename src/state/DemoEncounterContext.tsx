@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, useReducer, useState, type PropsWithChildren } from 'react'
 import { demoKeywords, demoTranscript } from '../data/demoData'
-import type { EligibilityResult, Keyword, TranscriptEvent } from '../domain/types'
+import type { ConfirmedDiagnosis, EligibilityResult, Keyword, PrescriptionOrder, TranscriptEvent } from '../domain/types'
 
 interface DemoEncounterState {
   eligibilityResult: EligibilityResult | null
@@ -10,6 +10,9 @@ interface DemoEncounterState {
   keywords: Keyword[]
   patientNotes: string[]
   doctorNotes: string[]
+  confirmedDiagnosis: ConfirmedDiagnosis | null
+  prescription: PrescriptionOrder | null
+  orderSaved: boolean
 }
 
 export type DemoEncounterAction =
@@ -19,6 +22,7 @@ export type DemoEncounterAction =
   | { type: 'add-patient-note'; note: string }
   | { type: 'add-doctor-note'; note: string }
   | { type: 'remove-keyword'; keywordId: string }
+  | { type: 'save-order'; diagnosis: ConfirmedDiagnosis; prescription: PrescriptionOrder }
   | { type: 'reset' }
 
 export const initialDemoEncounterState: DemoEncounterState = {
@@ -29,6 +33,9 @@ export const initialDemoEncounterState: DemoEncounterState = {
   keywords: [],
   patientNotes: [],
   doctorNotes: [],
+  confirmedDiagnosis: null,
+  prescription: null,
+  orderSaved: false,
 }
 
 export function demoEncounterReducer(state: DemoEncounterState, action: DemoEncounterAction): DemoEncounterState {
@@ -49,6 +56,8 @@ export function demoEncounterReducer(state: DemoEncounterState, action: DemoEnco
     }
     case 'remove-keyword':
       return { ...state, keywords: state.keywords.filter(({ id }) => id !== action.keywordId) }
+    case 'save-order':
+      return { ...state, confirmedDiagnosis: action.diagnosis, prescription: action.prescription, orderSaved: true }
     case 'reset':
       return initialDemoEncounterState
   }
@@ -56,13 +65,14 @@ export function demoEncounterReducer(state: DemoEncounterState, action: DemoEnco
 
 interface DemoEncounterContextValue {
   state: DemoEncounterState
-  resetNotice: string
+  statusNotice: string
   setEligibility: (result: EligibilityResult) => void
   scheduleAppointment: (time: string) => void
   playTranscript: () => void
   addPatientNote: (note: string) => void
   addDoctorNote: (note: string) => void
   removeKeyword: (keywordId: string) => void
+  saveOrder: (diagnosis: ConfirmedDiagnosis, prescription: PrescriptionOrder) => void
   resetDemo: () => void
 }
 
@@ -70,23 +80,27 @@ const DemoEncounterContext = createContext<DemoEncounterContextValue | null>(nul
 
 export function DemoEncounterProvider({ children }: PropsWithChildren) {
   const [state, dispatch] = useReducer(demoEncounterReducer, initialDemoEncounterState)
-  const [resetNotice, setResetNotice] = useState('')
+  const [statusNotice, setStatusNotice] = useState('')
   const value = useMemo(
     () => ({
       state,
-      resetNotice,
+      statusNotice,
       setEligibility: (result: EligibilityResult) => dispatch({ type: 'set-eligibility', result }),
       scheduleAppointment: (time: string) => dispatch({ type: 'schedule-appointment', time }),
       playTranscript: () => dispatch({ type: 'play-transcript' }),
       addPatientNote: (note: string) => dispatch({ type: 'add-patient-note', note }),
       addDoctorNote: (note: string) => dispatch({ type: 'add-doctor-note', note }),
       removeKeyword: (keywordId: string) => dispatch({ type: 'remove-keyword', keywordId }),
+      saveOrder: (diagnosis: ConfirmedDiagnosis, prescription: PrescriptionOrder) => {
+        dispatch({ type: 'save-order', diagnosis, prescription })
+        setStatusNotice('처방과 오더를 저장했습니다.')
+      },
       resetDemo: () => {
         dispatch({ type: 'reset' })
-        setResetNotice('데모가 초기화되었습니다.')
+        setStatusNotice('데모가 초기화되었습니다.')
       },
     }),
-    [resetNotice, state],
+    [statusNotice, state],
   )
 
   return <DemoEncounterContext.Provider value={value}>{children}</DemoEncounterContext.Provider>
