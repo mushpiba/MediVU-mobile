@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">MediVU Mobile</title>
+  <defs>
+    <linearGradient id="bg" x1="80" y1="50" x2="440" y2="470" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#123c62"/>
+      <stop offset="1" stop-color="#081d31"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="145" y1="130" x2="375" y2="385" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#39cfca"/>
+      <stop offset="1" stop-color="#2373aa"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="156" fill="none" stroke="#fff" stroke-opacity=".1" stroke-width="2"/>
+  <path d="M151 166c0-22 18-40 40-40h130c22 0 40 18 40 40v180c0 22-18 40-40 40H191c-22 0-40-18-40-40V166Z" fill="url(#mark)"/>
+  <path d="M225 181h62v45h45v62h-45v45h-62v-45h-45v-62h45v-45Z" fill="#fff"/>
+  <circle cx="366" cy="146" r="28" fill="#65ded6"/>
+</svg>
