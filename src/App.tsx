@@ -1,5 +1,7 @@
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { DemoToolbar } from './components/DemoToolbar'
+import { PatientEligibility } from './features/patient/PatientEligibility'
+import { PatientHome } from './features/patient/PatientHome'
 import { DemoEncounterProvider } from './state/DemoEncounterContext'
 
 function PlaceholderScreen({ eyebrow, title }: { eyebrow: string; title: string }) {
@@ -21,7 +23,9 @@ export function App() {
         <div className="app-root">
           <DemoToolbar />
           <Routes>
-            <Route path="/patient/home" element={<PlaceholderScreen eyebrow="PATIENT APP" title="환자 홈" />} />
+            <Route path="/patient/home" element={<PatientHome />} />
+            <Route path="/patient/eligibility" element={<PatientEligibility />} />
+            <Route path="/patient/schedule" element={<PlaceholderScreen eyebrow="PATIENT APP" title="예약 시간 선택" />} />
             <Route path="/doctor/schedule" element={<PlaceholderScreen eyebrow="DOCTOR APP" title="오늘의 비대면 일정" />} />
             <Route path="*" element={<Navigate replace to="/patient/home" />} />
           </Routes>
@@ -30,4 +34,3 @@ export function App() {
     </HashRouter>
   )
 }
-
