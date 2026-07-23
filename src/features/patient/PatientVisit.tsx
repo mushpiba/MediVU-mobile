@@ -1,11 +1,12 @@
 import { useRef, useState } from 'react'
 import { useDemoEncounter } from '../../state/DemoEncounterContext'
 
-export function PatientVisit() {
+export function PatientVisit({ embedded = false }: { embedded?: boolean }) {
   const { state, playTranscript, addPatientNote } = useDemoEncounter()
   const [expanded, setExpanded] = useState(false)
   const [note, setNote] = useState('')
   const dragStart = useRef<number | null>(null)
+  const Root = embedded ? 'div' : 'main'
 
   const submitNote = () => {
     if (!note.trim()) return
@@ -14,7 +15,7 @@ export function PatientVisit() {
   }
 
   return (
-    <main className="patient-visit-screen">
+    <Root className="patient-visit-screen">
       <h1 className="visually-hidden">비대면 진료</h1>
       <section className="video-stage" aria-label="가상 영상 통화">
         <div className="call-topbar"><span className="call-secure"><i aria-hidden="true">●</i> 암호화된 진료</span><span>04:18</span></div>
@@ -70,6 +71,6 @@ export function PatientVisit() {
           </section>
         </div>
       </section>
-    </main>
+    </Root>
   )
 }

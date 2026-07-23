@@ -83,6 +83,66 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .demo-toolbar button:hover { background: rgba(255, 255, 255, 0.15); }
 .demo-toolbar .reset-button { color: #b8dad8; }
+.together-view {
+  min-height: calc(100vh - 58px);
+  display: grid;
+  grid-template-columns: minmax(360px, 420px) minmax(0, 1fr);
+  gap: 16px;
+  padding: 16px;
+  background: #dfe8ed;
+}
+.together-pane {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: 48px minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid #c7d6df;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 14px 38px rgba(8, 29, 49, 0.12);
+}
+.together-pane-header {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 14px;
+  border-bottom: 1px solid var(--line);
+  background: white;
+}
+.together-pane-header small {
+  display: block;
+  color: var(--ink-500);
+  font-size: 7px;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+}
+.together-pane-header h1 {
+  margin: 1px 0 0;
+  color: var(--navy-900);
+  font-size: 12px;
+}
+.together-pane-dot {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px rgba(39, 179, 177, 0.1);
+}
+.together-pane-dot.patient { background: var(--cyan-500); }
+.together-pane-dot.doctor {
+  background: var(--blue-600);
+  box-shadow: 0 0 0 5px rgba(35, 115, 170, 0.1);
+}
+.together-view .patient-visit-screen,
+.together-view .doctor-workspace {
+  width: 100%;
+  height: calc(100vh - 138px);
+  min-height: 0;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.together-view .doctor-workspace-grid { height: calc(100% - 70px); }
 .placeholder-screen { min-height: calc(100vh - 58px); display: grid; place-items: center; padding: 24px; }
 .placeholder-card { width: min(100%, 520px); padding: 36px; border: 1px solid var(--line); border-radius: 22px; background: white; box-shadow: var(--shadow); }
 .eyebrow { color: var(--blue-600); font-size: 9px; font-weight: 850; letter-spacing: 0.13em; }
@@ -463,6 +523,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .pharmacy-contact small { margin-top: 3px; color: var(--ink-500); font-size: 7px; }
 .placeholder-card h1 { margin: 9px 0; font-size: 28px; letter-spacing: -0.04em; }
 .placeholder-card p { margin: 0; color: var(--ink-500); }
+@media (max-width: 900px) {
+  .together-view { grid-template-columns: 1fr; }
+  .together-view > .patient-pane { width: min(100%, 520px); justify-self: center; }
+  .together-view .patient-visit-screen { height: 760px; }
+  .together-view .doctor-workspace { height: 820px; }
+}
 @media (max-width: 600px) {
   .app-root { padding-top: 104px; }
   .demo-toolbar { min-height: 104px; align-items: flex-start; flex-direction: column; padding: 10px 12px; }
@@ -475,6 +541,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .doctor-page-header h1 { font-size: 25px; }.schedule-overview { margin: 24px 0; }.schedule-overview div { padding: 12px; }.next-patient-card { grid-template-columns: 52px 1fr auto; gap: 10px; padding: 15px; }.timeline-time { grid-column: 1; grid-row: 1 / 3; padding-right: 8px; }.timeline-time strong { font-size: 15px; }.patient-photo { display: none; }.patient-card-copy { grid-column: 2 / 4; }.next-patient-card > button { grid-column: 2 / 4; width: 100%; }.patient-check-grid { grid-template-columns: 1fr; }.patient-profile-hero { padding-top: 22px; }.doctor-start-button { width: 100%; }
   .doctor-workspace { min-height: calc(100vh - 104px); }.workspace-header { min-height: 78px; padding: 10px 12px; align-items: flex-start; }.workspace-header h1 { font-size: 14px; }.workspace-actions { align-items: flex-end; flex-wrap: wrap; justify-content: flex-end; }.recording-chip { width: 100%; justify-content: flex-end; }.doctor-mobile-tabs { height: 44px; display: flex; padding: 4px; border-bottom: 1px solid var(--line); background: white; }.doctor-mobile-tabs button { flex: 1; border-radius: 8px; color: var(--ink-500); background: transparent; font-size: 8px; font-weight: 750; }.doctor-mobile-tabs button.active { color: var(--blue-700); background: #e7f2f6; }.doctor-workspace-grid { display: block; height: calc(100vh - 226px); }.doctor-left-column, .doctor-right-column { height: 100%; border: 0; }.doctor-left-column { grid-template-rows: minmax(220px, 46%) 1fr; }.doctor-right-column { padding: 8px; }.doctor-workspace-grid .mobile-inactive { display: none; }.doctor-call-video { min-height: 220px; }.diagnosis-list li > button { grid-template-columns: 24px minmax(110px, 1fr) 58px 10px; }.history-drawer { width: 92vw; }
   .orders-page { min-height: calc(100vh - 104px); padding: 0; }.orders-header { grid-template-columns: 38px 1fr; margin: 0; padding: 14px; border-width: 0 0 1px; border-radius: 0; }.orders-header > button { width: 38px; height: 38px; }.orders-header .recording-chip { display: none; }.orders-layout { display: block; }.order-main-column { padding: 9px; }.order-section { padding: 14px; border-radius: 14px; }.order-fields { grid-template-columns: 1fr 1fr; }.prescription-card > header { align-items: flex-start; flex-direction: column; }.order-summary-panel { position: static; margin: 0 9px 22px; padding: 16px; }.medication-result-head > div { align-items: flex-start; flex-direction: column; }
+  .together-view { min-height: calc(100vh - 104px); gap: 10px; padding: 10px 8px 20px; }
+  .together-pane { border-radius: 16px; }
+  .together-view .patient-visit-screen,
+  .together-view .doctor-workspace { height: 720px; min-height: 720px; }
+  .together-view .doctor-workspace-grid { height: calc(100% - 122px); }
 }
 @media (min-width: 601px) {
   .patient-shell { margin-top: 24px; margin-bottom: 24px; min-height: calc(100vh - 106px); border-radius: 28px; box-shadow: var(--shadow); }

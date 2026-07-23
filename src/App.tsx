@@ -12,6 +12,7 @@ import { PatientResult } from './features/patient/PatientResult'
 import { PatientSchedule } from './features/patient/PatientSchedule'
 import { PatientVisit } from './features/patient/PatientVisit'
 import { PatientWaiting } from './features/patient/PatientWaiting'
+import { TogetherVisit } from './features/TogetherVisit'
 import { DemoEncounterProvider } from './state/DemoEncounterContext'
 
 function PlaceholderScreen({ eyebrow, title }: { eyebrow: string; title: string }) {
@@ -45,6 +46,7 @@ export function App() {
             <Route path="/doctor/patient" element={<DoctorPatient />} />
             <Route path="/doctor/visit" element={<DoctorVisit />} />
             <Route path="/doctor/orders" element={<DoctorOrders />} />
+            <Route path="/together/visit" element={<TogetherVisit />} />
             <Route path="*" element={<Navigate replace to="/patient/home" />} />
           </Routes>
         </div>

@@ -6,13 +6,14 @@ import { useDemoEncounter } from '../../state/DemoEncounterContext'
 
 type DoctorTab = 'transcript' | 'clinical' | 'history'
 
-export function DoctorVisit() {
+export function DoctorVisit({ embedded = false }: { embedded?: boolean }) {
   const navigate = useNavigate()
   const { state, playTranscript, addDoctorNote, removeKeyword } = useDemoEncounter()
   const [activeTab, setActiveTab] = useState<DoctorTab>('clinical')
   const [historyOpen, setHistoryOpen] = useState(false)
   const [doctorNote, setDoctorNote] = useState('')
   const diagnoses = useMemo(() => scoreDiagnoses(state.keywords, diagnosisCandidates), [state.keywords])
+  const Root = embedded ? 'div' : 'main'
 
   const submitDoctorNote = () => {
     if (!doctorNote.trim()) return
@@ -21,7 +22,7 @@ export function DoctorVisit() {
   }
 
   return (
-    <main className="doctor-workspace">
+    <Root className="doctor-workspace">
       <header className="workspace-header">
         <div><span className="eyebrow">LIVE VISIT · 04:18</span><h1>김하늘 환자 비대면 진료</h1></div>
         <div className="workspace-actions"><span className="recording-chip"><i aria-hidden="true">●</i> 전사 중</span><button type="button" aria-label="과거력 열기" onClick={() => setHistoryOpen(true)}>과거력</button><button className="face-to-face" type="button">대면 전환</button></div>
@@ -48,6 +49,6 @@ export function DoctorVisit() {
         </section>
       </div>
       {historyOpen && <div className="drawer-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setHistoryOpen(false) }}><aside className="history-drawer" aria-label="과거 진료 기록"><header><div><span className="eyebrow">LONGITUDINAL RECORD</span><h2>과거 진료 기록</h2></div><button type="button" aria-label="과거력 닫기" onClick={() => setHistoryOpen(false)}>×</button></header><div className="history-patient"><span aria-hidden="true">김</span><div><strong>김하늘</strong><small>42세 · 여성 · P-042</small></div></div><div className="history-timeline">{pastVisits.map((visit) => <article key={visit.date}><time>{visit.date}</time><span>{visit.type}</span><h3>{visit.diagnosis}</h3><p>{visit.note}</p></article>)}</div><section className="history-summary"><span>KNOWN HISTORY</span><div><b>알레르기</b><p>집먼지진드기 의심</p></div><div><b>복용력</b><p>세티리진 복용 경험</p></div></section></aside></div>}
-    </main>
+    </Root>
   )
 }

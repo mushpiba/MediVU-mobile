@@ -17,6 +17,7 @@ export function DemoToolbar() {
         <span><small>CLICKABLE DEMO</small>MediVU Mobile</span>
       </div>
       <nav aria-label="데모 역할 전환">
+        <button type="button" onClick={() => navigate('/together/visit')}>동시 보기</button>
         <button type="button" onClick={() => navigate('/patient/home')}>환자 보기</button>
         <button type="button" onClick={() => navigate('/doctor/schedule')}>의사 보기</button>
         <button type="button" className="reset-button" onClick={reset}>전체 초기화</button>
